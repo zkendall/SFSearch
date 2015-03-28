@@ -1,0 +1,8 @@
+SFSearch/.settings/
+*.classpath
+*.project
+SFSearch/target/
+SFSearch/src/main/webapp/VAADIN/widgetsets/
+sfsearch-ui/src/main/webapp/VAADIN/widgetsets/
+sfsearch-ui/.settings/
+sfsearch-ui/target/
