@@ -1,9 +1,11 @@
 package com.fssearch.ui;
 
-import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
+import java.util.List;
 
+import com.fssearch.da.FileLogService;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.Alignment;
@@ -13,39 +15,43 @@ import com.vaadin.ui.VerticalLayout;
 public class Searcher extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    private Random rand = new Random();
-
     TextField search = new TextField();
     ResultsList results = new ResultsList();
 
     public Searcher() {
         setMargin(true);
         setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        setSizeUndefined();
+        setWidth(100f, Unit.PERCENTAGE);
+        addComponents(search, results);
+        setExpandRatio(results, 1f);
 
-        search.setWidth("500px");
-
-        build();
-    }
-
-    private void build() {
-        
         search.addTextChangeListener(new TextChangeListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void textChange(TextChangeEvent event) {
-                results.buildList(mockResults(event.getText()));
+                results.buildList(search(event.getText()));
             }
         });
 
-        addComponents(search, results);
     }
 
-    private ArrayList<FileDto> mockResults(String search) {
-        ArrayList<FileDto> results = new ArrayList<FileDto>();
-        for (int i = 0; i <= rand.nextInt(15)+4; i++) {
-            results.add(new FileDto(search, "C:/bla/bla", new BigDecimal(i * rand.nextInt(1000))));
+    /**
+     * A lot of sophistication to be added here.
+     */
+    private List<FileDto> search(String search) {
+        List<FileDto> results = new ArrayList<FileDto>(0);
+        try {
+            results = FileLogService.queryAllLog();
+            Iterator<FileDto> iterator = results.iterator();
+            while (iterator.hasNext()) {
+                FileDto dto = iterator.next();
+                if (!dto.name.contains(search)) {
+                    iterator.remove();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return results;
     }

@@ -1,6 +1,7 @@
 package com.fssearch.ui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -21,7 +22,7 @@ public class ResultsList extends VerticalLayout {
         removeAllComponents();
     }
 
-    public void buildList(ArrayList<FileDto> files) {
+    public void buildList(Collection<FileDto> files) {
         reset();
         for (FileDto file : files) {
             SearchResult result = new SearchResult(file);
