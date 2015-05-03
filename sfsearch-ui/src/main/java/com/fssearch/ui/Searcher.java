@@ -20,8 +20,10 @@ public class Searcher extends VerticalLayout {
 
     public Searcher() {
         setMargin(true);
+        setSpacing(true);
+        
         setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        setWidth(100f, Unit.PERCENTAGE);
+        setSizeFull();
         addComponents(search, results);
         setExpandRatio(results, 1f);
 

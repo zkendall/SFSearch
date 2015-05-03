@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public class FileDto implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     final String name;
     final String path;
     final BigDecimal size;
@@ -15,4 +15,18 @@ public class FileDto implements Serializable {
         this.path = p;
         this.size = s;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public BigDecimal getSize() {
+        return size;
+    }
+
+    
 }
